@@ -1,18 +1,26 @@
-"""
-Escriba el codigo que ejecute la accion solicitada en cada pregunta.
-"""
-
-# pylint: disable=import-outside-toplevel
-
-
 def pregunta_01():
-    """
-    Siga las instrucciones del video https://youtu.be/qVdwpxG_JpE para
-    generar el archivo `files/plots/news.png`.
+    import os
+    import pandas as pd
+    import matplotlib.pyplot as plt
 
-    Un ejemplo de la grafica final esta ubicado en la raíz de
-    este repo.
+    df = pd.read_csv("files/input/news.csv")
 
-    El gráfico debe salvarse al archivo `files/plots/news.png`.
+    df = df.rename(columns={"Unnamed: 0": "Year"})
 
-    """
+    os.makedirs("files/plots", exist_ok=True)
+
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(df["Year"], df["Television"], label="Television")
+    plt.plot(df["Year"], df["Newspaper"], label="Newspaper")
+    plt.plot(df["Year"], df["Internet"], label="Internet")
+    plt.plot(df["Year"], df["Radio"], label="Radio")
+
+    plt.title("News Source")
+    plt.xlabel("Year")
+    plt.ylabel("Percent")
+    plt.legend()
+
+    plt.tight_layout()
+    plt.savefig("files/plots/news.png")
+    plt.close()
